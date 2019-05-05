@@ -37,7 +37,6 @@ func Sqrt(x float64) float64 {
 			fmt.Println(z*z - x)
 			break
 		}else{
-			fmt.Println(z)
 			z = z - (z * z -x)/(2*z)
 		}
 		
