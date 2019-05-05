@@ -32,6 +32,7 @@ func Sqrt(x float64) float64 {
 	z := 1.0
 	delta := 0.000000000001
 	for {
+		// 注意导数的使用方法
 		if  math.Abs(z*z - x) <= delta{
 			fmt.Println(z*z - x)
 			break
