@@ -1,12 +1,12 @@
 ## 指针
 1. `go`中的指针没有指针算术操作
 1. `*` 和 `&`与 `C`中相同。
+1. 指针的0值为`nil`。
 
 
 ## 结构体
 ```go
 type Vertex struct {
-
     X int
     Y int
 }
@@ -36,9 +36,9 @@ s = append(s, 1, 2, 3, 4)
 1. 列表长度不可变
 1. 切片长度是动态的
 1. 切片比列表更常用
+1. 切片的0值是`nil`
 1. 切片的长度`len(s`，是指切片自身的元素个数；切片的容量`cap(s)`是指切片所在`Arrar`的长度，可以通过`s[:len(s)+4]`的操作，扩展切片长度
 1. `s[2:]`会修改`cap(s)`， `s[:0]`则不会
-1. 
 
 ## 使用make创建动态长度切片
 ```go
@@ -75,4 +75,27 @@ func Pic(dx, dy int) [][]uint8 {
 func main() {
 	pic.Show(Pic)
 }
+```
+solution 2 use make
+```go
+package main
+
+import "golang.org/x/tour/pic"
+
+func Pic(dx, dy int) [][]uint8 {
+	img := make([][]uint8, dy)
+	for i := range img {
+		row := make([]uint8, dx)
+		for j := range row {
+			row[j] = uint8(i^j)
+		}
+		img[i] = row
+	}
+	return img
+}
+
+func main() {
+	pic.Show(Pic)
+}
+
 ```
