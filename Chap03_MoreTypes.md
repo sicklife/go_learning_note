@@ -99,3 +99,49 @@ func main() {
 }
 
 ```
+
+## map 
+1. `map`类型的0值是`nil`
+1. 可以用`make(map[KeyType]ValueType)`来生成/初始化一个map
+1. `delete(m, key)`删除key
+1. `elem, ok = m[key]`判断`key`是否在`m`中，如果在， `ok`为`true`；否则`ok`为`false`, `elem`为对应元素类型的0值。
+```go
+// 方式1
+m := make(map[String]Vertex)
+
+//方式2
+var m = map[String]Vertex{
+    "Bell Labs": Vertext{40, -70},
+    "Google": Vertex{37, -122},
+}
+
+//方式3 元素的类型声明可以省略
+var m = map[String]Vertex{
+    "Bell Labs": {40, -70},
+    "Google": {37, -122},
+}
+```
+
+## Exercise Map
+```go
+package main
+
+import (
+	"golang.org/x/tour/wc"
+	"strings"
+)
+
+func WordCount(s string) map[string]int {
+	words := strings.Fields(s)
+	m := make(map[string]int)
+	for _, word := range words{
+		m[word] +=  1
+	}
+	return m
+}
+
+func main() {
+	wc.Test(WordCount)
+}
+
+```
