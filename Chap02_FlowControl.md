@@ -18,7 +18,36 @@ if v := math.Pow(x, y); v < lim {
     return v
 }
 ```
+## 循环及函数
+```go
 
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func Sqrt(x float64) float64 {
+	z := 1.0
+	delta := 0.000000000001
+	for {
+		if  math.Abs(z*z - x) <= delta{
+			fmt.Println(z*z - x)
+			break
+		}else{
+			fmt.Println(z)
+			z = z - (z * z -x)/(2*z)
+		}
+		
+	}
+	return z
+}
+
+func main() {
+	fmt.Println(Sqrt(2))
+}
+```
 
 
 
