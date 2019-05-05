@@ -49,6 +49,14 @@ func main() {
 }
 ```
 
+## Switch
 
+1. `go`中的`switch`自动会加入`break`
+1. `switch`的值不需要是常量，也不需要是整型
+1. 可以用`switch`代替长长的`if else`链。
+
+## defer
+1. 在函数结束后执行，用于关闭资源等
+2. 多个`defer`为堆栈结构， `FILO`，后进先出。
 
 
