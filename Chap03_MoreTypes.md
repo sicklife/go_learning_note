@@ -145,3 +145,40 @@ func main() {
 }
 
 ```
+
+## Function
+1. 在`go`中，函数也可以作为值被传递
+1. 闭包： 函数和引用环境组成的实体。函数与某个变量是绑定的。
+
+## Exercise: Fibonacci closure
+```go
+package main
+
+import "fmt"
+
+// fibonacci is a function that returns
+// a function that returns an int.
+func fibonacci() func() int {
+	var f_list []int
+	return func() int {
+		if len(f_list) == 0 {
+			f_list = append(f_list, 0)
+			return 0
+		} 
+		if len(f_list) == 1 {
+			f_list = append(f_list, 1)
+			return 1
+		}
+		tmp := f_list[len(f_list)-1] + f_list[len(f_list)-2]
+		f_list = append(f_list, tmp)
+		return tmp
+	}
+}
+
+func main() {
+	f := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
+}
+```
