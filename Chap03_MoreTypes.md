@@ -11,6 +11,7 @@ type Vertex struct {
     Y int
 }
 ```
+1. 可以使用`type TypeName .....` 来定义一个type
 1. 可以直接通过指针获取`field`值，而不需要显式的`dereference`
 
 
