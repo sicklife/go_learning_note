@@ -64,3 +64,29 @@ func main() {
 }
 
 ```
+
+
+```go
+package main
+
+import "golang.org/x/tour/reader"
+
+type MyReader struct{}
+
+// TODO: Add a Read([]byte) (int, error) method to MyReader.
+
+// Read接口接受一个字节切片，修改这个字节切片，返回修改后的字节切片长度，以及错误信息
+func (myReader MyReader) Read(s []byte) (i int, e error){
+	s = s[:cap(s)]
+	for i := range(s) {
+		s[i] = 'A'
+	}
+	return cap(s), nil
+}
+
+
+func main() {
+	reader.Validate(MyReader{})
+}
+
+```
