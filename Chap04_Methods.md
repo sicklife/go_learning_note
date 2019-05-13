@@ -64,3 +64,78 @@ func main() {
 }
 
 ```
+
+## Errors
+1. `error`类型是一种内建接口，只要实现了`Error()`方法就可以， `Error`方法应该返回一个`string`。
+1. `go`中的方法经常返回一个`error`值，调用者应该处理这些错误值。
+
+```go
+
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type ErrNegativeSqrt float64
+
+func (e ErrNegativeSqrt) Error() string {
+    
+    // 这里必须要转成float(e)，是避免无限递归调用Error()方法。
+	return fmt.Sprintf("cannot Sqrt negative number: %v", float64(e))
+}
+
+
+func Sqrt(x float64) (float64, error) {
+	if x < 0 {
+		e := ErrNegativeSqrt(x)
+		return 0, e
+	}
+	z := 1.0
+	delta := 0.0000000000001
+	for {
+		if z*z == x || math.Abs(z*z - x) < delta {
+			break
+		}else{
+			z = z - (z*z - x)/(2*z)
+		}
+	}
+	return z, nil
+}
+
+func main() {
+	fmt.Println(Sqrt(2))
+	fmt.Println(Sqrt(-2))
+}
+
+```
+
+## Readers
+1. `string`是一个类型，`strings`是一个`package`
+1. `io.Reader`接口的`Read` 方法，接收一个整数，返回字节切片，和错误
+
+```go
+
+package main
+
+import "golang.org/x/tour/reader"
+
+type MyReader struct{}
+
+// TODO: Add a Read([]byte) (int, error) method to MyReader.
+
+func (r MyReader) Read(s []byte) (n int, err error) {
+	s = s[:cap(s)];
+    for i := range s {
+        s[i] = 'A'
+    }
+    return cap(s), nil
+}
+
+func main() {
+	reader.Validate(MyReader{})
+}
+
+
+```
