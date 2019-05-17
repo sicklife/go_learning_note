@@ -115,9 +115,6 @@ func main() {
 1. `string`是一个类型，`strings`是一个`package`
 1. `io.Reader`接口的`Read` 方法，接收一个整数，返回字节切片，和错误
 
-```go
-
-=======
 
 ```go
 package main
@@ -128,7 +125,6 @@ type MyReader struct{}
 
 // TODO: Add a Read([]byte) (int, error) method to MyReader.
 
-<<<<<<< HEAD
 func (r MyReader) Read(s []byte) (n int, err error) {
 	s = s[:cap(s)];
     for i := range s {
@@ -137,7 +133,6 @@ func (r MyReader) Read(s []byte) (n int, err error) {
     return cap(s), nil
 }
 
-=======
 // Read接口接受一个字节切片，修改这个字节切片，返回修改后的字节切片长度，以及错误信息
 func (myReader MyReader) Read(s []byte) (i int, e error){
 	s = s[:cap(s)]
@@ -148,12 +143,54 @@ func (myReader MyReader) Read(s []byte) (i int, e error){
 }
 
 
->>>>>>> refs/remotes/origin/master
 func main() {
 	reader.Validate(MyReader{})
 }
 
 
 ```
-=======
+
+## rot13Reader exercise
+```go
+
+package main
+
+import (
+	"io"
+	"os"
+	"strings"
+)
+
+func rot13(b byte) byte{
+	switch {
+		case 'A' <= b && b <= 'M':
+        b = b + 13
+    case 'M' < b && b <= 'Z':
+        b = b - 13
+    case 'a' <= b && b <= 'm':
+        b = b + 13
+    case 'm' < b && b <= 'z':
+        b = b - 13
+	}
+	return b
+}
+
+type rot13Reader struct {
+	r io.Reader
+}
+
+func (r rot13Reader) Read(b []byte) (int, error) {
+	n, e := r.r.Read(b)
+	for i:=0; i<n; i++ {
+		b[i] = rot13(b[i])
+	}
+	return n, e
+}
+
+func main() {
+	s := strings.NewReader("Lbh penpxrq gur pbqr!")
+	r := rot13Reader{s}
+	io.Copy(os.Stdout, &r)
+}
+
 ```
